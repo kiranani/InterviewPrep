@@ -7,8 +7,17 @@ class Solution {
         }
         int[] maxes = new int[n];
         maxes[n - 1] = nums[n - 1];
+        boolean exists = false;
         for (int j = n - 2; j > -1; j--) {
-            maxes[j] = Math.max(maxes[j + 1], nums[j]);
+            if (maxes[j + 1] > nums[j]) {
+                maxes[j] = maxes[j + 1];
+                exists = true;
+            } else {
+                maxes[j] = nums[j];
+            }
+        }
+        if (!exists) {
+            return num;
         }
         int i = 0;
         while (i < n - 1) {
