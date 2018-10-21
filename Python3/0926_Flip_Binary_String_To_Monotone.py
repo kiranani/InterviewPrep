@@ -19,7 +19,8 @@ class Solution:
                 zeroes[-i - 1] = zeroes[-i]
         #print(ones)
         #print(zeroes)
-        
+        if ones[-1] == n or zeroes[0] == n:
+            return 0
         ans = min(zeroes[0], ones[-1])
         for i in range(1, len(S)):
             ans = min(ans, zeroes[i]+ones[i-1])
