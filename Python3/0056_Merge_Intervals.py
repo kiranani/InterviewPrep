@@ -31,3 +31,32 @@ class Solution:
                 else:
                     s.pop()
         return ints
+
+    
+# Definition for an interval.
+# class Interval:
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+class Solution:
+    def merge(self, intervals):
+        """
+        :type intervals: List[Interval]
+        :rtype: List[Interval]
+        """
+        if len(intervals) == 0:
+            return []
+        def intersect(a, b):
+            return a.end >= b.start
+        intervals.sort(key=lambda x: (x.start, -x.end))
+        #print([(x.start, x.end) for x in intervals])
+        ints = [intervals[0]]
+        for interval in intervals[1:]:
+            #print(interval.start, interval.end, ints[-1].start, ints[-1].end)
+            if intersect(ints[-1], interval):
+                ints[-1].end = max(ints[-1].end, interval.end)
+            else:
+                ints.append(interval)
+        return ints
+                    
