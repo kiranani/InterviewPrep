@@ -12,7 +12,7 @@ class Solution:
         nodes = set(range(n))
         while len(nodes) > 2:
             visited = [False] * n
-            for i in range(n):
+            for i in list(nodes):
                 if len(graph[i]) == 1 and not visited[i]:
                     nei = graph[i].pop()
                     graph[nei].remove(i)
