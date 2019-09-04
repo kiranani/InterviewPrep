@@ -1,22 +1,18 @@
 class Solution:
-    def trap(self, height):
-        n, total, prev, high, acc, maxH = len(height), 0, 0, 0, 0, 0
-        if n == 0:
-            return 0
-        for h in height:
+    def trap(self, height: List[int]) -> int:
+        total, acc, high, high_i = 0, 0, 0, -1
+        for i, h in enumerate(height):
             if h >= high:
                 total += acc
-                maxH, high, acc = h, h, 0
+                acc, high, high_i = 0, h, i
             else:
                 acc += high - h
-        high, acc = 0, 0
-        for i in range(n - 1, -1, -1):
-            if height[i] >= high:
+        acc, high = 0, 0
+        for h in height[high_i:][::-1]:
+            if h >= high:
                 total += acc
-                high, acc = height[i], 0
-                if high == maxH:
-                    return total
+                acc, high = 0, h
             else:
-                acc += high - height[i]
+                acc += high - h
         return total
         
