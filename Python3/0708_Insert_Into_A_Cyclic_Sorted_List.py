@@ -16,7 +16,7 @@ class Solution:
                 or root.next.val < root.val 
                 and (insertVal < root.next.val or insertVal > root.val)):
                 root.next = Node(insertVal, root.next)
-                break
+                return head
             root = root.next
         return head
         
