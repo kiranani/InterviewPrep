@@ -5,25 +5,17 @@
 #         self.next = None
 
 class Solution:
-    def mergeKLists(self, lists):
-        """
-        :type lists: List[ListNode]
-        :rtype: ListNode
-        """
-        def nextNode(h, lists):
-            if not h:
-                return None
-            v, i = heapq.heappop(h)
-            node = lists[i]
-            lists[i] = node.next
-            if node.next is not None:
-                heapq.heappush(h, (node.next.val, i))
-            node.next = nextNode(h, lists)
-            return node
-        h = []
-        for i, node in enumerate(lists):
-            if node is not None:
-                heapq.heappush(h, (node.val, i))
-        return nextNode(h, lists)
-            
-    
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        head, h = ListNode(None), []
+        for i, n in enumerate(lists):
+            if n:
+                heapq.heappush(h, (n.val, i))
+        root = head
+        while h:
+            i = heapq.heappop(h)[1]
+            n = lists[i]
+            if n.next:
+                heapq.heappush(h, (n.next.val, i))
+            root.next, root, lists[i] = n, n, n.next
+        return head.next
+        
