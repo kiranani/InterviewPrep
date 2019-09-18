@@ -6,18 +6,13 @@
 #         self.right = None
 
 class Solution:
-    def sortedArrayToBST(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: TreeNode
-        """
-        def recurse(nums, left, right):
-            if left > right:
-                return None
-            mid = (left + right) // 2
-            node = TreeNode(nums[mid])
-            node.left = recurse(nums, left, mid - 1)
-            node.right = recurse(nums, mid + 1, right)
-            return node
-        return recurse(nums, 0, len(nums) - 1)
+    def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
+        def helper(l, r):
+            if l <= r:
+                m = (l + r) // 2
+                n = TreeNode(nums[m])
+                n.right = helper(m + 1, r)
+                n.left = helper(l, m - 1)
+                return n
+        return helper(0, len(nums) - 1)
         
