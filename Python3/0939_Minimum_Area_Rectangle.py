@@ -1,27 +1,19 @@
 class Solution:
-    def minAreaRect(self, points):
-        """
-        :type points: List[List[int]]
-        :rtype: int
-        """
-        I = float("inf")
+    def minAreaRect(self, points: List[List[int]]) -> int:
         if len(points) < 4:
             return 0
-        m = I
-        d = collections.defaultdict(set)
+        g = collections.defaultdict(set)
         for point in points:
-            d[point[0]].add(point[1])
-        keys = sorted(list(d.keys()))
-        #print(d)
-        for j in range(1, len(keys)):
-            for i in range(j):
-                yPoints = sorted(list(d[keys[i]] & d[keys[j]]))
-                diffs = [yPoints[i + 1] - yPoints[i] for i in range(len(yPoints) - 1)]
-                if not diffs:
-                    continue
-                else:
-                    minG = min(diffs)
-                    a = (keys[j] - keys[i]) * minG
-                    m = m if m < a else a
-        return 0 if m == I else m
+            g[point[0]].add(point[1])
+        m, l = float("inf"), list(g.keys())
+        for i in range(len(l)):
+            for j in range(i + 1, len(l)):
+                x1, x2 = l[i], l[j]
+                ys = sorted(g[x1].intersection(g[x2]))
+                if len(ys) > 1:
+                    dy = [ys[i + 1] - ys[i] for i in range(len(ys) - 1)]
+                    m = min(m, abs(x1 - x2) * min(dy))
+        if m < float("inf"):
+            return m
+        return 0
         
