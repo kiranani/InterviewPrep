@@ -1,14 +1,13 @@
 class Solution:
-    def lengthOfLongestSubstring(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        d, l, m = {}, 0, 0
-        for i, ch in enumerate(s):
-            if d.get(ch) is None or d[ch] < l:
-                m = m if m > i - l + 1 else i - l + 1
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        n, h = len(s), {}
+        m = l = 0
+        for r, c in enumerate(s):
+            if c not in h or h[c] < l:
+                m = max(m, r - l + 1)
             else:
-                l = d[ch] + 1
-            d[ch] = i
+                l = h[c] + 1
+            h[c] = r
         return m
+        
+        
