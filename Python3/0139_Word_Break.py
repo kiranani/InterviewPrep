@@ -1,20 +1,12 @@
 class Solution:
-    def wordBreak(self, s, wordDict):
-        """
-        :type s: str
-        :type wordDict: List[str]
-        :rtype: bool
-        """
-        n = len(s)
-        if n == 0:
-            return True
-        w, m = set(wordDict), [True] + [False] * n
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        wordSet, n = set(wordDict), len(s)
+        dp = [False] * (n + 1)
+        dp[0] = True
         for j in range(1, n + 1):
             for i in range(j):
-                #print(i, j, m[i])
-                if m[i] and s[i:j] in w:
-                    m[j] = True
+                if dp[i] and s[i:j] in wordSet:
+                    dp[j] = True
                     break
-        #print(m)
-        return m[-1]
+        return dp[n]
         
