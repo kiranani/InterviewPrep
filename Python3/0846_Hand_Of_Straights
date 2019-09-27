@@ -1,0 +1,30 @@
+class Solution:
+    def isNStraightHand(self, hand: List[int], W: int) -> bool:
+        if W == 1:
+            return True
+        n = len(hand)
+        if n % W:
+            return False
+        q, h = collections.deque(), collections.Counter(hand)
+        for i in sorted(h.keys()):
+            if not q:
+                for _ in range(h[i]):
+                    q.append([1, i])
+            else:
+                j, c = 0, h[i]
+                if c < len(q):
+                    return False
+                while j < len(q):
+                    if q[j][1] + 1 == i:
+                        q[j][0], q[j][1] = q[j][0] + 1, i
+                    else:
+                        return False
+                    j += 1
+                while j < c:
+                    q.append([1, i])
+                    j += 1
+                while q and q[0][0] == W:
+                    q.popleft()
+        return all(x[0] == W for x in q)
+                
+        
