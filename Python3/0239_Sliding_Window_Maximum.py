@@ -21,27 +21,25 @@ class Solution:
         return ans
         
 class Solution:
-    def maxSlidingWindow(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: List[int]
-        """
-        n, q = len(nums), collections.deque()
-        if n == 0:
-            return []
-        for i in range(k - 1):
-            while q and nums[i] > nums[q[-1]]:
-                q.pop()
-            q.append(i)
-
-        ans = []
-        for i in range(k - 1, n):
-            if q and q[0] < i - k + 1:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        n = len(nums)
+        if not n or k == 1:
+            return nums
+        
+        def update_q(i):
+            if q and q[0] == i - k:
                 q.popleft()
-            while q and nums[i] > nums[q[-1]]:
+            while q and nums[q[-1]] < nums[i]:
                 q.pop()
+        q = collections.deque()
+        for i in range(k - 1):
+            update_q(i)
             q.append(i)
-            ans.append(nums[q[0]])
+        ans = [None] * (n - k + 1)
+        for i in range(k - 1, n):
+            update_q(i)
+            q.append(i)
+            ans[i - k + 1] = nums[q[0]]
         return ans
+        
         
