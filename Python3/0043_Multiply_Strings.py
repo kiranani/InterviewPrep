@@ -9,10 +9,7 @@ class Solution:
                 c, q[~(i + j)] = divmod(c + q[~(i + j)] + num1[~i] * num2[~j], 10)
             q[~(i + j + 1)] = c
         i = 0
-        while i < n and q[i] == 0:
+        while i < n - 1 and q[i] == 0:
             i += 1
-        ans = "".join([str(x) for x in q[i:]])
-        if ans:
-            return ans
-        return "0"
+        return "".join([str(x) for x in q[i:]])
         
