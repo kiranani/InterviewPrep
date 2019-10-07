@@ -5,16 +5,22 @@
 #         self.next = None
 
 class Solution:
-    def reverseList(self, head):
+    def reverseList(self, head: ListNode) -> ListNode:
         """
-        :type head: ListNode
-        :rtype: ListNode
-        """
-        if head is None or head.next is None:
+        if not head:
+            return None
+        elif head.next is None:
             return head
         else:
-            newHead = self.reverseList(head.next)
+            new_head = self.reverseList(head.next)
             head.next.next = head
             head.next = None
-            return newHead
+            return new_head
+        """
+        root, prev = head, None
+        while root:
+            temp = root.next
+            root.next, prev = prev, root
+            root = temp
+        return prev
         
