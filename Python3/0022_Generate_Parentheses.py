@@ -1,17 +1,17 @@
 class Solution:
-    def generateParenthesis(self, n):
-        """
-        :type n: int
-        :rtype: List[str]
-        """
+    def generateParenthesis(self, n: int) -> List[str]:
         ans = []
-        def recurse(s = "", l = 0, r = 0):
-            if len(s) == 2 * n:
-                ans.append(s)
+        def backtrack(l, r, exp):
+            if l == r == n:
+                ans.append("".join(exp))
+                return
+            exp.append("(")
             if l < n:
-                recurse(s + "(", l + 1, r)
+                backtrack(l + 1, r, exp)
             if r < l:
-                recurse(s + ")", l, r + 1)
-        recurse()
+                exp[-1] = ")"
+                backtrack(l, r + 1, exp)
+            exp.pop()
+        backtrack(0, 0, [])
         return ans
-        
+                
