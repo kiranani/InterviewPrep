@@ -1,21 +1,21 @@
+from collections import defaultdict
 class Solution:
-    def findMinHeightTrees(self, n, edges):
-        """
-        :type n: int
-        :type edges: List[List[int]]
-        :rtype: List[int]
-        """
-        graph = [set() for i in range(n)]
-        for edge in edges:
-            graph[edge[0]].add(edge[1])
-            graph[edge[1]].add(edge[0])
-        nodes = set(range(n))
-        while len(nodes) > 2:
-            visited = [False] * n
-            for i in list(nodes):
-                if len(graph[i]) == 1 and not visited[i]:
-                    nei = graph[i].pop()
-                    graph[nei].remove(i)
-                    nodes.remove(i)
-                    visited[nei] = True
-        return list(nodes)
+    def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
+        if n < 3:
+            return list(range(n))
+        graph = defaultdict(set)
+        for n1, n2 in edges:
+            graph[n1].add(n2)
+            graph[n2].add(n1)
+        deg_1 = [k for k in graph if len(graph[k]) == 1]
+        while n > 2:
+            n -= len(deg_1)
+            temp = []
+            for node in deg_1:
+                for c in graph[node]:
+                    graph[c].remove(node)
+                    if len(graph[c]) == 1:
+                        temp.append(c)
+            deg_1 = temp
+        return deg_1
+        
