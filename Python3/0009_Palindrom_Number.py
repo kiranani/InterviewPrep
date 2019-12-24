@@ -1,14 +1,10 @@
 class Solution:
-    def isPalindrome(self, x):
-        """
-        :type x: int
-        :rtype: bool
-        """
-        if x < 0 or (x % 10 == 0 and x):
+    def isPalindrome(self, x: int) -> bool:
+        if x < 0 or x % 10 == 0 and x != 0:
             return False
-        p, y = 0, x
-        while y:
-            r, y = y % 10, y // 10
-            p = 10 * p + r
-        return p == x
+        inv = 0
+        while x > inv:
+            x, rem = divmod(x, 10)
+            inv = 10 * inv + rem
+        return x == inv or x == inv // 10
         
