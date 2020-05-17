@@ -5,15 +5,16 @@ class Solution:
         :type A: List[int]
         :rtype: List[int]
         """
-        ans = deque()
-        i, j = 0, len(A) - 1
-        while i <= j:
+        n = len(A)
+        i, j, k, ans = 0, n - 1, n - 1, [None] * n
+        while k > -1:
             iSq, jSq = A[i] ** 2, A[j] ** 2
             if iSq < jSq:
-                ans.appendleft(jSq)
+                ans[k] = jSq
                 j -= 1
             else:
-                ans.appendleft(iSq)
+                ans[k] = iSq
                 i += 1
+            k -= 1
         return ans
         
